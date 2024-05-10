@@ -9,7 +9,7 @@ public class DBContext {
 	private final String dbName = "web";
 	private final String portNumber = "3306";
 	private final String user = "root";
-	private final String password = "";
+	private final String password = "1234";
 	private static  DBContext instance;
 
 	public Connection getConnection() throws ClassNotFoundException, SQLException {

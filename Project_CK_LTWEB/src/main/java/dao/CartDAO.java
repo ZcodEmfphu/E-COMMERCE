@@ -11,13 +11,14 @@ import context.DBContext;
 import model.TempCart;
 
 public class CartDAO {
+
 	Connection connect = null;
 	PreparedStatement ps = null;
 	ResultSet result = null;
 
+	// Lấy danh sách các mục giỏ hàng
 	public List<TempCart> getCartByUserId(int id) {
 		List<TempCart> list = new ArrayList<>();
-//		DBContext db = new DBContext();
 		DBContext db = DBContext.getInstance();
 
 		try {
@@ -42,9 +43,9 @@ public class CartDAO {
 		return list;
 	}
 
+	// Lấy danh sách các mục giỏ hàng dựa trên ID
 	public List<TempCart> getCartByUserIdAndProductId(int user_id, int pro_id) {
 		List<TempCart> list = new ArrayList<>();
-//		DBContext db = new DBContext();
 		DBContext db = DBContext.getInstance();
 
 		try {
@@ -70,8 +71,8 @@ public class CartDAO {
 		return list;
 	}
 
+	// Chèn một mục mới vào giỏ hàng tạm thời
 	public void insertTempcart(int user_id, int pro_id, int quantity) {
-//		DBContext db = new DBContext();
 		DBContext db = DBContext.getInstance();
 		try {
 			connect = db.getConnection();
@@ -92,8 +93,8 @@ public class CartDAO {
 		}
 	}
 
+	// Cập nhật số lượng của một mục trong giỏ hàng tạm thời
 	public void updateTempcart(int user_id, int pro_id, int quantity) {
-		//DBContext db = new DBContext();
 		DBContext db = DBContext.getInstance();
 		try {
 			connect = db.getConnection();
@@ -114,9 +115,8 @@ public class CartDAO {
 		}
 	}
 
-	// Xoa cart khi nhan dat hang thanh cong
+	// Xóa toàn bộ giỏ hàng của một người dùng '
 	public void deleteCart(int user_id) {
-//		DBContext db = new DBContext();
 		DBContext db = DBContext.getInstance();
 		try {
 			connect = db.getConnection();
@@ -135,9 +135,8 @@ public class CartDAO {
 		}
 	}
 
-	// Xoa bo san pham khoi gio
+	// Xóa một sản phẩm cụ thể khỏi giỏ hàng của một người dùng
 	public int deleteProduct(int user_id, int pro_id) {
-		//DBContext db = new DBContext();
 		DBContext db = DBContext.getInstance();
 		int numberRowUpdate = 0;
 		try {
