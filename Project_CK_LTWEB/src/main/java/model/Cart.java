@@ -6,158 +6,95 @@ public class Cart {
 	private ArrayList<CartItem> items = new ArrayList<>();
 	private int total;
 
-	// Xoa cart khi nhan dat hang thanh cong
+	// Xóa giỏ hàng khi đặt hàng thành công
 	public void deleteCart() {
-		try {
-			items.removeAll(items);
-			calculateOrderTotal();
-		} catch (NumberFormatException nfe) {
-			System.out.println("Error while deleting cart item: " + nfe.getMessage());
-			nfe.printStackTrace();
-		}
+		items.clear(); // Xóa tất cả các sản phẩm trong giỏ hàng
+		calculateOrderTotal();
 	}
-	
-	// Xoa san pham khoi gio
+
+	// Xóa sản phẩm khỏi giỏ hàng
 	public void deleteProduct(String stt) {
-		int iSTT = 0;
 		try {
-			iSTT = Integer.parseInt(stt);
-			items.remove(iSTT - 1);
-			calculateOrderTotal();
-		} catch (NumberFormatException nfe) {
-			System.out.println("Error while deleting cart item: " + nfe.getMessage());
-			nfe.printStackTrace();
+			int index = Integer.parseInt(stt) - 1;
+			if (index >= 0 && index < items.size()) {
+				items.remove(index); // Xóa sản phẩm tại vị trí chỉ định
+				calculateOrderTotal();
+			} else {
+				System.out.println("Invalid index for deleting product: " + stt);
+			}
+		} catch (NumberFormatException e) {
+			System.out.println("Invalid index format for deleting product: " + stt);
 		}
 	}
 
+	// Cập nhật số lượng sản phẩm trong giỏ hàng
 	public int updateQuanlity(String stt, int status) {
-		int iSTT = Integer.parseInt(stt);
-		CartItem cartItem = (CartItem) items.get(iSTT - 1);
 		try {
-			if (status > 0) {
-				cartItem.increment();
+			int index = Integer.parseInt(stt) - 1;
+			if (index >= 0 && index < items.size()) {
+				CartItem cartItem = items.get(index);
+				int newQuantity = cartItem.getQuantity() + status;
+				if (newQuantity > 0) {
+					cartItem.setQuantity(newQuantity);
+					if (newQuantity == 0) {
+						items.remove(index); // Xóa sản phẩm nếu số lượng bằng 0
+					}
+					calculateOrderTotal();
+					return newQuantity;
+				} else {
+					System.out.println("Invalid quantity after update: " + newQuantity);
+				}
 			} else {
-				cartItem.descrement();
+				System.out.println("Invalid index for updating quantity: " + stt);
 			}
-			if (cartItem.getQuantity() == 0) {
-				items.remove(iSTT - 1);
-			}
-			calculateOrderTotal();
-			System.out.println(cartItem.getQuantity());
-			return cartItem.getQuantity();
-		} catch (NumberFormatException nfe) {
-			System.out.println("Error while updating cart: " + nfe.getMessage());
-			nfe.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println("Invalid index format for updating quantity: " + stt);
 		}
 		return 0;
 	}
 
-//	public void addCart(String pro_id, String name, String image, String desciption, int price, String quantity) {
-//		int iQuantity = Integer.parseInt(quantity);
-//		CartItem cartItem = new CartItem();
-//		boolean temp = false;
-//		try {
-//			if (iQuantity > 0) {
-//				for (CartItem item : items) {
-//					if (item.getId().equals(pro_id)) {
-//						item.setQuantity(iQuantity + item.getQuantity());
-//						calculateOrderTotal();
-//						temp = true;
-//					}
-//				}
-//				if (temp == false) {
-//					cartItem.setId(pro_id);
-//					cartItem.setName(name);
-//					cartItem.setPrice(price);
-//					cartItem.setImage(image);
-//					cartItem.setDescription(desciption);
-//					cartItem.setQuantity(iQuantity);
-//					// cartItem.setTotalCost(price * iQuantity);
-//					items.add(cartItem);
-//					calculateOrderTotal();
-//				}
-//			}
-//		} catch (NumberFormatException nfe) {
-//			System.out.println("Error while parsing from String to primitive types: " + nfe.getMessage());
-//			nfe.printStackTrace();
-//		}
-//	}
-	
+	// Thêm sản phẩm vào giỏ hàng
 	public void addCart(Product product, String quantity) {
-		int iQuantity = Integer.parseInt(quantity);
-		CartItem cartItem = new CartItem();
-		boolean temp = false;
 		try {
-			if (iQuantity > 0) {
+			int newQuantity = Integer.parseInt(quantity);
+			if (newQuantity > 0) {
+				boolean existingItem = false;
 				for (CartItem item : items) {
-					if (item.getProduct().getId()==  product.getId()) {
-						item.setQuantity(iQuantity + item.getQuantity());
-						calculateOrderTotal();
-						temp = true;
+					if (item.getProduct().getId() == product.getId()) {
+						item.setQuantity(item.getQuantity() + newQuantity);
+						existingItem = true;
+						break;
 					}
 				}
-				if (temp == false) {
-//					cartItem.setId(pro_id);
-//					cartItem.setName(name);
-//					cartItem.setPrice(price);
-//					cartItem.setImage(image);
-//					cartItem.setDescription(desciption);
-					cartItem.setProduct(product);
-					cartItem.setQuantity(iQuantity);
-					// cartItem.setTotalCost(price * iQuantity);
-					items.add(cartItem);
-					calculateOrderTotal();
+				if (!existingItem) {
+					CartItem newItem = new CartItem(product, newQuantity);
+					items.add(newItem);
 				}
+				calculateOrderTotal();
+			} else {
+				System.out.println("Invalid quantity for adding product: " + quantity);
 			}
-		} catch (NumberFormatException nfe) {
-			System.out.println("Error while parsing from String to primitive types: " + nfe.getMessage());
-			nfe.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println("Invalid quantity format for adding product: " + quantity);
 		}
 	}
 
+	// Tính lại tổng số tiền đơn hàng
 	protected void calculateOrderTotal() {
-		int plus = 0;
-		for (int i = 0; i < items.size(); i++) {
-			CartItem cartItem = (CartItem) items.get(i);
-			plus += cartItem.getTotalCost();
-
+		int totalCost = 0;
+		for (CartItem item : items) {
+			totalCost += item.getTotalCost();
 		}
-		setTotal(plus);
+		total = totalCost;
 	}
 
+	// Định dạng lại tổng số tiền
 	public String formatTotal() {
-		String fm = total + "";
-		String result = "";
-		int count = 0;
-		for (int i = fm.length() - 1; i >= 0; i--) {
-			result = fm.charAt(i) + result;
-			count++;
-			if (count == 3 && i != 0) {
-				result = "." + result;
-				count = 0;
-			}
-		}
-		return result;
+		String formattedTotal = String.format("%,d", total); // Sử dụng định dạng số nguyên có dấu phẩy
+		return formattedTotal;
 	}
 
-	// public void updateCart(String stt, String quantity) {
-	// int iSTT = Integer.parseInt(stt);
-	// CartItem cartItem = (CartItem) list.get(iSTT - 1);
-	// int iPrice = cartItem.getPrice();
-	// int iQuantity = Integer.parseInt(quantity);
-	// try {
-	// if (iQuantity > 0) {
-	// cartItem.setQuantity(iQuantity);
-	// cartItem.setTotalCost(iPrice * iQuantity);
-	// calculateOrderTotal();
-	// }
-	// } catch (NumberFormatException nfe) {
-	// System.out.println("Error while updating cart: " + nfe.getMessage());
-	// nfe.printStackTrace();
-	// }
-	//
-	// }
-
+	// Getter và setter
 	public ArrayList<CartItem> getList() {
 		return items;
 	}

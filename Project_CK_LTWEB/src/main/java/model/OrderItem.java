@@ -3,7 +3,7 @@ package model;
 public class OrderItem {
 	private Product product;
 	private int quanlity;
-	
+
 	public OrderItem(Product product, int quanlity) {
 		super();
 		this.product = product;
@@ -30,10 +30,5 @@ public class OrderItem {
 	public String toString() {
 		return "OrderItem [product=" + product + ", quanlity=" + quanlity + "]";
 	}
-	
-	
-	
-	
-	
 
 }

@@ -9,19 +9,20 @@
 <title></title>
 
 <style type="text/css">
-.btn-in_decrement{
+.btn-in_decrement {
 	background-color: #ccc;
 }
-.quanlity{
-	max-width: 70px !important; 
-	width: 50px !important; 
+
+.quanlity {
+	max-width: 70px !important;
+	width: 50px !important;
 	background-color: #fff !important;
-
-
 }
-.quanlity:hover{
-	cusor:none;
+
+.quanlity:hover {
+	cusor: none;
 }
+
 .table {
 	
 }
@@ -99,8 +100,9 @@ td {
 </style>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link href="<%=request.getContextPath()%>/themify-icons/themify-icons.css"
-	rel="stylesheet">	
+<link
+	href="<%=request.getContextPath()%>/themify-icons/themify-icons.css"
+	rel="stylesheet">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
@@ -110,15 +112,16 @@ td {
 	<h2 class="text-center">Giỏ Hàng</h2>
 	<div class="container">
 		<div>
-			<a href="<%=request.getContextPath()%>/orderUser" class="btn btn-info" align="right"><i
-				class="fa fa-angle-left"></i> Đơn đã mua</a>
+			<a href="<%=request.getContextPath()%>/orderUser"
+				class="btn btn-info" align="right"><i class="fa fa-angle-left"></i>
+				Đơn đã mua</a>
 		</div>
 		<table id="cart" class="table table-hover table-condensed">
 			<thead>
 				<tr>
 					<th style="width: 50%">Tên sản phẩm</th>
 					<th style="width: 10%">Giá</th>
-					<th style="width: 8%;text-align:center;">Số lượng</th>
+					<th style="width: 8%; text-align: center;">Số lượng</th>
 					<th style="width: 22%" class="text-center">Thành tiền</th>
 					<th style="width: 10%"></th>
 				</tr>
@@ -130,11 +133,14 @@ td {
 						<tr>
 							<td data-th="Product">
 								<div class="row">
-									<input type='hidden' name='stt'	value='<c:out value="${counter.count}"/>'>
+									<input type='hidden' name='stt'
+										value='<c:out value="${counter.count}"/>'>
 									<div class="col-sm-2 hidden-xs">
-										<img src="${cartItem.getProduct().image}" class="img-responsive"	width="100" height="100">
+										<img src="${cartItem.getProduct().image}"
+											class="img-responsive" width="100" height="100">
 									</div>
-									<input type="hidden" name="cart_pro_id" value="${cartItem.getProduct().id}" />
+									<input type="hidden" name="cart_pro_id"
+										value="${cartItem.getProduct().id}" />
 									<div class="col-sm-10">
 										<h4 class="nomargin">${cartItem.getProduct().name}</h4>
 										<p>${cartItem.getProduct().descreption}</p>
@@ -142,55 +148,59 @@ td {
 								</div>
 							</td>
 							<td data-th="Price">${cartItem.formatPrice()}VNĐ.</td>
-							<input type="hidden" name="price" value="${cartItem.getProduct().price}" />
-							<td data-th="Quantity" style="display: inline-flex">
-							<a href="CartController?action=update&quan=1&stt=${counter.count}&cart_pro_id=${cartItem.getProduct().id}" class="btn btn-in_decrement">
-								<i class="ti-plus"></i>
-							</a>
-							
-							<input class="form-control text-center quanlity" name="quan" value="${cartItem.quantity}" type="text" readonly>
-							<a href="CartController?action=update&quan=-1&stt=${counter.count}&cart_pro_id=${cartItem.getProduct().id}" class=" btn btn-in_decrement">
-								<i class="ti-minus"></i>
-							</a>
-								<!-- <button class="btn btn-success btn-block" name="action"
+							<input type="hidden" name="price"
+								value="${cartItem.getProduct().price}" />
+							<td data-th="Quantity" style="display: inline-flex"><a
+								href="CartController?action=update&quan=1&stt=${counter.count}&cart_pro_id=${cartItem.getProduct().id}"
+								class="btn btn-in_decrement"> <i class="ti-plus"></i>
+							</a> <input class="form-control text-center quanlity" name="quan"
+								value="${cartItem.quantity}" type="text" readonly> <a
+								href="CartController?action=update&quan=-1&stt=${counter.count}&cart_pro_id=${cartItem.getProduct().id}"
+								class=" btn btn-in_decrement"> <i class="ti-minus"></i>
+							</a> <!-- <button class="btn btn-success btn-block" name="action"
 									value="update">
 									<i class="fa fa-trash-o">Cập nhật</i>
-								</button> -->
-								</td>
-							<td data-th="Subtotal" class="text-center">${cartItem.formatTotal()} VNĐ</td>
-							<td class="actions" data-th="">								<button class="btn btn-danger btn-sm" name="action"	value="delete">
+								</button> --></td>
+							<td data-th="Subtotal" class="text-center">${cartItem.formatTotal()}
+								VNĐ</td>
+							<td class="actions" data-th="">
+								<button class="btn btn-danger btn-sm" name="action"
+									value="delete">
 									<i class="fa fa-trash-o">Xóa</i>
 								</button>
 							</td>
 						</tr>
-						</tbody>
+					</tbody>
 				</form>
 			</c:forEach>
 			<tfoot>
 				<form method="POST" action="CartController">
-				<tr>
-				<td><a href="HomeController" class="btn btn-warning">
-				<i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a></td>
-				<td class="actions" data-th="">
-					<!-- <button class="btn btn-danger" name="action" value="oder" onclick="oder()">
+					<tr>
+						<td><a href="HomeController" class="btn btn-warning"> <i
+								class="fa fa-angle-left"></i> Tiếp tục mua hàng
+						</a></td>
+						<td class="actions" data-th="">
+							<!-- <button class="btn btn-danger" name="action" value="oder" onclick="oder()">
 						<i class="fa fa-edit">Đặt hàng</i>
-					</button>  -->
-					<!--  <script type="text/javascript">
+					</button>  --> <!--  <script type="text/javascript">
 						function oder() {
 							alert("Đặt hàng thành công");
 						}
-					</script>--></td>
+					</script>-->
+						</td>
 				</form>
 				<td></td>
-				<td class="hidden-xs text-center">
-				<strong>TỔNG:${cart.formatTotal()} VNĐ.</strong></td></tr>
+				<td class="hidden-xs text-center"><strong>TỔNG:${cart.formatTotal()}
+						VNĐ.</strong></td>
+				</tr>
 				<tr>
 					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>
 					<td><c:if test="${cart.list.size() > 0}">
-							<a class ="btn btn-danger" href="CartController?action=submit" >Đặt hàng</a>
+							<a class="btn btn-danger" href="CartController?action=submit">Đặt
+								hàng</a>
 						</c:if></td>
 				</tr>
 			</tfoot>
