@@ -157,4 +157,29 @@ public class CartDAO {
 		}
 		return numberRowUpdate;
 	}
+
+	public List<TempCart> getFirstFiveItemsInCartByUserId(int user_id) {
+		List<TempCart> list = new ArrayList<>();
+		DBContext db = DBContext.getInstance();
+
+		try (Connection connect = db.getConnection();
+				PreparedStatement ps = connect
+						.prepareStatement("SELECT * FROM `cart` WHERE cart.user_id = ? LIMIT 3")) {
+
+			ps.setInt(1, user_id);
+
+			try (ResultSet result = ps.executeQuery()) {
+				while (result.next()) {
+					list.add(new TempCart(result.getInt(1), result.getInt(3), result.getInt(4)));
+				}
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public static void main(String[] args) {
+
+	}
 }
