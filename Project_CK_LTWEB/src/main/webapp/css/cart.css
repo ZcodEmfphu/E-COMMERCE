@@ -1,82 +1,114 @@
 .btn-in_decrement {
-    background-color: #ccc;
+	background-color: #ccc;
 }
 
 .quanlity {
-    max-width: 70px !important;
-    width: 50px !important;
-    background-color: #fff !important;
+	max-width: 70px !important;
+	width: 50px !important;
+	background-color: #fff !important;
 }
 
 .quanlity:hover {
-    cusor: none;
+	cusor: none;
 }
 
 .table {
-
+	
 }
 
 tbody {
-
+	
 }
 
 tr {
-
+	
 }
 
 td, .table {
-
+	
 }
 
 tfoot {
-
+	
 }
 
 tr {
-
+	
 }
 
 td {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
 @media screen and (max-width: 600px) {
-    table#cart tbody td .form-control {
-        width: 20%;
-        display: inline !important;
-    }
-    .actions .btn {
-        width: 36%;
-        margin: 1.5em 0;
-    }
-    .actions .btn-info {
-        float: left;
-    }
-    .actions .btn-danger {
-        float: right;
-    }
-    table#cart thead {
-        display: none;
-    }
-    table#cart tbody td {
-        display: block;
-        padding: .6rem;
-        min-width: 320px;
-    }
-    table#cart tbody tr td:first-child {
-        background: #333;
-        color: #fff;
-    }
-    table#cart tbody td:before {
-        content: attr(data-th);
-        font-weight: bold;
-        display: inline-block;
-        width: 8rem;
-    }
-    table#cart tfoot td {
-        display: block;
-    }
-    table#cart tfoot td .btn {
-        display: block;
-    }
+	table#cart tbody td .form-control {
+		width: 20%;
+		display: inline !important;
+	}
+	.actions .btn {
+		width: 36%;
+		margin: 1.5em 0;
+	}
+	.actions .btn-info {
+		float: left;
+	}
+	.actions .btn-danger {
+		float: right;
+	}
+	table#cart thead {
+		display: none;
+	}
+	table#cart tbody td {
+		display: block;
+		padding: .6rem;
+		min-width: 320px;
+	}
+	table#cart tbody tr td:first-child {
+		background: #333;
+		color: #fff;
+	}
+	table#cart tbody td:before {
+		content: attr(data-th);
+		font-weight: bold;
+		display: inline-block;
+		width: 8rem;
+	}
+	table#cart tfoot td {
+		display: block;
+	}
+	table#cart tfoot td .btn {
+		display: block;
+	}
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	flex-direction: column;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.pagination li {
+	list-style: none;
+	margin: 0 5px;
+}
+
+.pagination li a {
+	text-decoration: none;
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	color: #333;
+	border-radius: 5px;
+}
+
+.pagination li.active a {
+	background-color: #007bff;
+	color: #fff;
 }
