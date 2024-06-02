@@ -149,6 +149,7 @@ public class CartController extends HttpServlet {
 		int temp = db.insertOder(user.getId(), "", new java.sql.Date(time), 1);
 
 		priceTransportOrderDAO.insert(temp, price_Transport);
+		
 		for (TempCart item : items) {
 			int proId = item.getProId();
 			Product product = pd.getProductById(proId);
