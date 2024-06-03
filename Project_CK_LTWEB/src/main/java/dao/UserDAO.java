@@ -28,7 +28,8 @@ public class UserDAO {
 			result = ps.executeQuery();
 			while (result.next()) {
 				list.add(new User(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
-						result.getString(5), result.getString(6), result.getInt(7),result.getString(8),result.getInt(9)));
+						result.getString(5), result.getString(6), result.getInt(7), result.getString(8),
+						result.getInt(9)));
 			}
 			result.close();
 			ps.close();
@@ -44,8 +45,9 @@ public class UserDAO {
 		return list;
 
 	}
-	//Lay ra nhung user co rol va status chi dinh
-	public List<User> getUserByRolId(int rolId,int status) {
+
+	// Lay ra nhung user co rol va status chi dinh
+	public List<User> getUserByRolId(int rolId, int status) {
 		DBContext db = DBContext.getInstance();
 		List<User> list = new ArrayList<>();
 		try {
@@ -58,7 +60,8 @@ public class UserDAO {
 			result = ps.executeQuery();
 			while (result.next()) {
 				list.add(new User(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
-						result.getString(5), result.getString(6), result.getInt(7),result.getString(8),result.getInt(9)));
+						result.getString(5), result.getString(6), result.getInt(7), result.getString(8),
+						result.getInt(9)));
 			}
 			result.close();
 			ps.close();
@@ -85,8 +88,8 @@ public class UserDAO {
 			ps.setString(1, userName);
 			result = ps.executeQuery();
 			while (result.next()) {
-				return new User(result.getInt(1),result.getString(2), result.getString(3), result.getString(4), result.getString(5),
-						result.getString(6), result.getInt(7),result.getString(8));
+				return new User(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
+						result.getString(5), result.getString(6), result.getInt(7), result.getString(8));
 			}
 			result.close();
 			ps.close();
@@ -102,7 +105,8 @@ public class UserDAO {
 		return null;
 	}
 	
-	public User getUser(String userName,int status) {
+	// using on project
+	public User getUser(String userName, int status) {
 		DBContext db = DBContext.getInstance();
 		try {
 			connect = db.getConnection();
@@ -113,8 +117,8 @@ public class UserDAO {
 			ps.setInt(2, status);
 			result = ps.executeQuery();
 			while (result.next()) {
-				return new User(result.getInt(1),result.getString(2), result.getString(3), result.getString(4), result.getString(5),
-						result.getString(6), result.getInt(7),result.getString(8));
+				return new User(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
+						result.getString(5), result.getString(6), result.getInt(7), result.getString(8));
 			}
 			result.close();
 			ps.close();
@@ -140,8 +144,9 @@ public class UserDAO {
 			ps.setInt(1, id);
 			result = ps.executeQuery();
 			while (result.next()) {
-				return new User(result.getInt(1),result.getString(2), result.getString(3), result.getString(4), result.getString(5),
-						result.getString(6), result.getInt(7),result.getString(8),result.getInt(9));
+				return new User(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
+						result.getString(5), result.getString(6), result.getInt(7), result.getString(8),
+						result.getInt(9));
 			}
 			result.close();
 			ps.close();
@@ -174,12 +179,12 @@ public class UserDAO {
 			ps.setInt(7, user.getStatus());
 			ps.executeUpdate();
 			ps.clearParameters();
-			
+
 			ps = connect.prepareStatement("select `id` from `user` order by `id` desc limit 1;");
 			result = ps.executeQuery();
 			result.next();
 			id = result.getInt(1);
-			System.out.println(id);
+			System.out.println(id + "Phú");
 
 			ps.close();
 			connect.close();
@@ -225,8 +230,8 @@ public class UserDAO {
 			return 0;
 		}
 	}
-	
-	public int changPassword(String userName,String  newPass) {
+
+	public int changPassword(String userName, String newPass) {
 		DBContext db = DBContext.getInstance();
 		try {
 			connect = db.getConnection();
@@ -250,14 +255,15 @@ public class UserDAO {
 			return 0;
 		}
 	}
-	public int changStatus(int id,int status) {
+
+	public int changStatus(int id, int status) {
 		DBContext db = DBContext.getInstance();
 		try {
 			connect = db.getConnection();
 			String query = "UPDATE user SET  user.status= ? where  user.id= ?;";
 			ps = connect.prepareStatement(query);
-			ps.setInt(1,status);
-			ps.setInt(2,id);
+			ps.setInt(1, status);
+			ps.setInt(2, id);
 			int numberRowUpdate = ps.executeUpdate();
 
 			ps.close();

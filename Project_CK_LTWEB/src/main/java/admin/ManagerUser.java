@@ -13,9 +13,6 @@ import contanst.Status;
 import dao.UserDAO;
 import model.User;
 
-/**
- * Servlet implementation class ManagerUser
- */
 @WebServlet("/manager_user")
 public class ManagerUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,10 +27,10 @@ public class ManagerUser extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
-		// TODO Auto-generated method stub
-		//request.setCharacterEncoding("UTF-8");
+	
 		UserDAO userDAO = new UserDAO();
 		String action = request.getParameter("action");
 		String update = request.getParameter("updateUser");

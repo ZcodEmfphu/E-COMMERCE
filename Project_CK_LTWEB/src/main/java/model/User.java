@@ -9,6 +9,7 @@ public class User {
 	private String password;
 	private int rolId;
 	private String email;
+	private String profileImage;
 	private int status;
 
 	public User(String fullName, String numberPhone, String address, String userName, String password, int rolId) {
@@ -21,10 +22,8 @@ public class User {
 		this.rolId = rolId;
 	}
 
-
-
-	public User( String fullName, String numberPhone, String address, String userName, String password,
-			int rolId, String email) {
+	public User(String fullName, String numberPhone, String address, String userName, String password, int rolId,
+			String email) {
 		super();
 		this.fullName = fullName;
 		this.numberPhone = numberPhone;
@@ -35,8 +34,8 @@ public class User {
 		this.email = email;
 	}
 
-
-
+	
+	// using 
 	public User(int id, String fullName, String numberPhone, String address, String userName, String password,
 			int rolId, String email) {
 		super();
@@ -49,8 +48,6 @@ public class User {
 		this.rolId = rolId;
 		this.email = email;
 	}
-
-
 
 	public User(int id, String fullName, String numberPhone, String address, String userName, String password,
 			int rolId) {
@@ -63,11 +60,9 @@ public class User {
 		this.password = password;
 		this.rolId = rolId;
 	}
-	
-	
 
-	public User( String fullName, String numberPhone, String address, String userName, String password,
-			int rolId, String email, int status) {
+	public User(String fullName, String numberPhone, String address, String userName, String password, int rolId,
+			String email, int status) {
 		super();
 		this.fullName = fullName;
 		this.numberPhone = numberPhone;
@@ -78,9 +73,6 @@ public class User {
 		this.email = email;
 		this.status = status;
 	}
-		
-
-
 
 	public User(int id, String fullName, String numberPhone, String address, String userName, String password,
 			int rolId, String email, int status) {
@@ -95,20 +87,30 @@ public class User {
 		this.email = email;
 		this.status = status;
 	}
-
-
+	
+	// User have value profile image 
+	public User(int id, String fullName, String numberPhone, String address, String userName, String password,
+			int rolId, String email, String profileImage, int status) {
+		super();
+		this.id = id;
+		this.fullName = fullName;
+		this.numberPhone = numberPhone;
+		this.address = address;
+		this.userName = userName;
+		this.password = password;
+		this.rolId = rolId;
+		this.email = email;
+		this.profileImage = profileImage;
+		this.status = status;
+	}
 
 	public int getStatus() {
 		return status;
 	}
 
-
-
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
-
 
 	public String getFullName() {
 		return fullName;
@@ -169,18 +171,15 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return " fullName=" + fullName + ", numberPhone=" + numberPhone + ", address=" + address
-				+ ", userName=" + userName + ", password=" + password + ", rolId=" + rolId + " ,status:" + status;
+		return " fullName=" + fullName + ", numberPhone=" + numberPhone + ", address=" + address + ", userName="
+				+ userName + ", password=" + password + ", rolId=" + rolId + " ,status:" + status;
 	}
 
 }
