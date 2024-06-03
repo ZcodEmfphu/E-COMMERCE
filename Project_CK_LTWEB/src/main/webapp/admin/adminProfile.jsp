@@ -12,6 +12,16 @@
 <link href="./css/bootstrap.min.css" rel="stylesheet">
 <link href="./css/jquery.dataTables.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../themify-icons/themify-icons.css">
+<style>
+    .hidden {
+        display: none;
+    }
+    .img-thumbnail {
+        display: none;
+        max-width: 200px;
+        max-height: 200px;
+    }
+</style>
 </head>
 
 <body>
@@ -42,19 +52,19 @@ int year = local.getYear();
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-body">
-							<c:if test="${message != null }">
+							<c:if test="${message != null}">
 								<div class="alert alert-success">
 									${message}
 								</div>
 							</c:if>
-							<c:if test="${error != null }">
+							<c:if test="${error != null}">
 								<div class="alert alert-danger">
 									${error}
 								</div>
 							</c:if>
-							<form action="${contextPath}/change_admin" method="POST" class="form-horizontal form-material">
+							<form action="${contextPath}/change_admin" method="POST" class="form-horizontal form-material" enctype="multipart/form-data">
 								<div class="form-group mb-4">
-									<label class="col-md-12 p-0"><b>Họ và tên </b></label>
+									<label class="col-md-12 p-0"><b>Họ và tên</b></label>
 									<div class="col-md-12 border-bottom p-0">
 										<input type="text" placeholder="Johnathan Doe"
 											class="form-control p-0 border-0" value="${user.fullName}"
@@ -76,8 +86,8 @@ int year = local.getYear();
 									</div>
 								</div>
 
-								<div class="form-group mb-4" id="hidenChangePass" style="display: none;">
-									<label class="col-md-12 p-0"><b>Nhập mật khẩu</b></label>
+								<div class="form-group mb-4 hidden" id="hidenChangePass">
+									<label class="col-md-12 p-0"><b>Nhập mật khẩu cũ</b></label>
 									<div class="col-md-12 border-bottom p-0" style="display: inline-flex;">
 										<input type="password" name="oldPass" id="oldPass"
 											class="form-control p-0 border-0" onchange="checkPass()">
@@ -91,6 +101,15 @@ int year = local.getYear();
 									</div>
 									<label class="col-md-12 p-0" id="checNewPass"><b></b></label>
 								</div>
+
+                                <div class="form-group mb-4">
+                                    <label class="col-md-12 p-0"><b>Hình ảnh đại diện</b></label>
+                                    <div class="col-md-12 border-bottom p-0">
+                                        <input type="file" class="form-control p-0 border-0" name="profileImage" id="profileImage" accept="image/*" onchange="loadFile(event)">
+                                        <img id="output" class="img-thumbnail mt-2" />
+                                    </div>
+                                </div>
+                                
 								<div class="form-group mb-4">
 									<label class="col-md-12 p-0"><b>Số điện thoại</b></label>
 									<div class="col-md-12 border-bottom p-0">
@@ -112,7 +131,7 @@ int year = local.getYear();
 										<textarea rows="5" class="form-control p-0 border-0" readonly>${user.address}</textarea>
 									</div>
 								</div>
-								<div id="update" style="display: none;">
+								<div id="update" class="hidden">
 									<button type="submit" class="btn btn-success" id="btn_update">Cập nhật</button>
 									<a class="btn btn-info" href="${contextPath}/admin">Quay lại</a>
 								</div>
@@ -146,18 +165,18 @@ int year = local.getYear();
 		$('#fullName').attr('readonly', false); 
 		$('#phone').attr('readonly', false); 
 		$('#email').attr('readonly', false);
-		$('#update').css("display","block");
-		$('#editInfor').css('display',"none");
+		$('#update').removeClass('hidden');
+		$('#editInfor').addClass('hidden');
 	});
 
 	var show = true;
 	$('#password').focus(function(){
 		if(check){
 			if(!show){
-				$('#hidenChangePass').css('display','none');
+				$('#hidenChangePass').addClass('hidden');
 				show = true;
 			} else {
-				$('#hidenChangePass').css('display','block');
+				$('#hidenChangePass').removeClass('hidden');
 				show = false;
 			}
 		}
@@ -176,39 +195,42 @@ int year = local.getYear();
 				pass: password
 			},
 			success: function(data){
-				if(data == "subcess"){
-					$('#checkpass').text("Mật khẩu chính xác");
-					$('#checkpass').css("color","green");
+				if(data == "success"){
+					$('#checkpass').text("Mật khẩu chính xác").css("color", "green");
 					$('#btn_update').removeAttr('disabled');
 					$('#newPass').focus();
-					$('#btn_update').attr('disabled','disabled');
-					$('#checNewPass').css("color","red");
-					$('#checNewPass').text('Vui lòng nhập mật khẩu mới');
-				} else if(data == "error"){
-					$('#checkpass').text("Mật khẩu không chính xác");
-					$('#checkpass').css("color","red");
-					$('#btn_update').attr('disabled','disabled');
+					$('#btn_update').attr('disabled', 'disabled');
+					$('#checNewPass').css("color", "red").text('Vui lòng nhập mật khẩu mới');
+				} else {
+					$('#checkpass').text("Mật khẩu không chính xác").css("color", "red");
+					$('#btn_update').attr('disabled', 'disabled');
 				}
 			}
 		});
 	}
 
 	$('#newPass').change(function(){
-		var value = $('#newPass').val();
-		if(value == ""){
-			$('#checNewPass').css("color","red");
-			$('#checNewPass').text('Vui lòng nhập mật khẩu mới');
-			$('#btn_update').attr('disabled','disabled');
+		var value = $(this).val();
+		if(value === ""){
+			$('#checNewPass').css("color", "red").text('Vui lòng nhập mật khẩu mới');
+			$('#btn_update').attr('disabled', 'disabled');
 		} else if(value.length < 10){
-			$('#checNewPass').css("color","red");
-			$('#checNewPass').text('Vui lòng nhập mật khẩu dài hơn 10 kí tự');
-			$('#btn_update').attr('disabled','disabled');
+			$('#checNewPass').css("color", "red").text('Vui lòng nhập mật khẩu dài hơn 10 kí tự');
+			$('#btn_update').attr('disabled', 'disabled');
 		} else {
 			$('#btn_update').removeAttr('disabled');
-			$('#checNewPass').text("");
-			$('#checNewPass').css("color","none");
+			$('#checNewPass').text("").css("color", "none");
 		}
 	});
+
+	var loadFile = function(event) {
+		var output = document.getElementById('output');
+		output.src = URL.createObjectURL(event.target.files[0]);
+		output.onload = function() {
+			URL.revokeObjectURL(output.src) // Giải phóng bộ nhớ
+		}
+		output.style.display = "block"; // Hiển thị ảnh
+	};
 </script>
 
 </body>
