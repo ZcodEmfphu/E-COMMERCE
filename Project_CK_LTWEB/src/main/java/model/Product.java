@@ -19,19 +19,6 @@ public class Product {
 		this.image = image;
 
 	}
-//	
-//
-//
-//	public Product(int id, String name, String descreption, int price, String image, int catId) {
-//		super();
-//		this.id = id;
-//		this.name = name;
-//		this.descreption = descreption;
-//		this.price = price;
-//		this.image = image;
-//		this.catId = catId;
-//	}
-//		
 
 	public Product(int id, String name, String descreption, int price, String image, int height, int length, int width,
 			int weigth, int catId) {
@@ -48,22 +35,17 @@ public class Product {
 		this.catId = catId;
 	}
 
-
 	public int getWeigth() {
 		return weigth;
 	}
-
 
 	public void setWeigth(int weigth) {
 		this.weigth = weigth;
 	}
 
-
 	public int getId() {
 		return id;
 	}
-
-
 
 	public void setId(int id) {
 		this.id = id;
@@ -101,56 +83,39 @@ public class Product {
 		this.image = image;
 	}
 
-	
 	public int getCatId() {
 		return catId;
 	}
 
-
-
 	public void setCatId(int catId) {
 		this.catId = catId;
 	}
-	
-	
 
 	public int getHeight() {
 		return height;
 	}
 
-
-
 	public void setHeight(int height) {
 		this.height = height;
 	}
-
-
 
 	public int getLength() {
 		return length;
 	}
 
-
-
 	public void setLength(int length) {
 		this.length = length;
 	}
-
-
 
 	public int getWidth() {
 		return width;
 	}
 
-
-
 	public void setWidth(int width) {
 		this.width = width;
 	}
 
-
-
-	public  String formatPrice() {
+	public String formatPrice() {
 		String fm = price + "";
 		String result = "";
 		int count = 0;
@@ -170,6 +135,5 @@ public class Product {
 		return "Product [id=" + id + ", name=" + name + ", descreption=" + descreption + ", price=" + price + ", image="
 				+ image + ", cate ID: " + catId;
 	}
-	
 
 }
