@@ -20,26 +20,19 @@ import dao.ProductDAO;
 import model.Category;
 import support.Endcoding;
 
-/**
- * Servlet implementation class AddProduct
- */
+
 @MultipartConfig(maxFileSize = 1024*1200)
 @WebServlet("/add_product")
 public class AddProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
+
 	public AddProductController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -50,10 +43,6 @@ public class AddProductController extends HttpServlet {
 		request.getRequestDispatcher("/admin/addProduct1.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -73,9 +62,6 @@ public class AddProductController extends HttpServlet {
 		String proWidth = request.getParameter("width");
 		String proWeigth = request.getParameter("weigth");
 
-//		String upLoadFolder = "F:\\TT_LTW\\TT_LaptrinhWeb\\Project_CK_LTWEB\\src\\main\\webapp\\Image\\";// Cho nay la
-		
-		// Lay ra duong dan real path noi luu Image
 		String upLoadFolder = request.getServletContext().getRealPath("/Image");																								// lay duong
 																											
 		Path upLoadPath = Paths.get(upLoadFolder);
@@ -92,11 +78,11 @@ public class AddProductController extends HttpServlet {
 			File file = new File(upLoadFolder + File.separator + productName);
 			if (!file.exists()) {
 				proImage = "Image/" + productName;
-//				System.out.println(Paths.get(upLoadPath.toString(), imageFileName).toString());
+
 				image.write(Paths.get(upLoadPath.toString(), productName).toString());
 				productDAO.insert(proName, proDes, Integer.parseInt(proPrice), proImage, Integer.parseInt(proKind),Integer.parseInt(proHeight),Integer.parseInt(proLength),Integer.parseInt(proWidth),Integer.parseInt(proWeigth));
 				response.sendRedirect(request.getContextPath()+"/manager_product?access=yes&action=main");
-//				request.getRequestDispatcher("/manager_product").forward(request, response);
+
 			}else {
 				request.setAttribute("listCate", listCate);
 				request.setAttribute("imageError", "File đã tồn tại");

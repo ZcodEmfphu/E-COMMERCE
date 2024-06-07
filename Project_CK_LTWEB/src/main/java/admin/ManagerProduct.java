@@ -22,26 +22,19 @@ import dao.ProductDAO;
 import model.Category;
 import model.Product;
 
-/**
- * Servlet implementation class ManagerProduct
- */
+
 @MultipartConfig()
 @WebServlet("/manager_product")
 public class ManagerProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
+
 	public ManagerProduct() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -76,6 +69,7 @@ public class ManagerProduct extends HttpServlet {
 			}else if(action.equals("comment")) {
 				String id = request.getParameter("proId");
 				request.setAttribute("product", productDAO.getProductById(Integer.parseInt(id)));
+				
 				CommentDAO commentDAO = new CommentDAO();
 				System.out.println(commentDAO.getCommentByProductId(Integer.parseInt(id)));
 				request.setAttribute("listComment", commentDAO.getCommentByProductId(Integer.parseInt(id)));

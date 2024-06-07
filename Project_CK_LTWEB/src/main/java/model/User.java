@@ -12,30 +12,29 @@ public class User {
 	private String profileImage;
 	private int status;
 
-	public User(String fullName, String numberPhone, String address, String userName, String password, int rolId) {
-		super();
-		this.fullName = fullName;
-		this.numberPhone = numberPhone;
-		this.address = address;
-		this.userName = userName;
-		this.password = password;
-		this.rolId = rolId;
-	}
+//	public User(String fullName, String numberPhone, String address, String userName, String password, int rolId) {
+//		super();
+//		this.fullName = fullName;
+//		this.numberPhone = numberPhone;
+//		this.address = address;
+//		this.userName = userName;
+//		this.password = password;
+//		this.rolId = rolId;
+//	}
 
-	public User(String fullName, String numberPhone, String address, String userName, String password, int rolId,
-			String email) {
-		super();
-		this.fullName = fullName;
-		this.numberPhone = numberPhone;
-		this.address = address;
-		this.userName = userName;
-		this.password = password;
-		this.rolId = rolId;
-		this.email = email;
-	}
+//	public User(String fullName, String numberPhone, String address, String userName, String password, int rolId,
+//			String email) {
+//		super();
+//		this.fullName = fullName;
+//		this.numberPhone = numberPhone;
+//		this.address = address;
+//		this.userName = userName;
+//		this.password = password;
+//		this.rolId = rolId;
+//		this.email = email;
+//	}
 
-	
-	// using 
+	// using for change password
 	public User(int id, String fullName, String numberPhone, String address, String userName, String password,
 			int rolId, String email) {
 		super();
@@ -49,6 +48,7 @@ public class User {
 		this.email = email;
 	}
 
+	// using for update user
 	public User(int id, String fullName, String numberPhone, String address, String userName, String password,
 			int rolId) {
 		super();
@@ -61,6 +61,7 @@ public class User {
 		this.rolId = rolId;
 	}
 
+	// using for register
 	public User(String fullName, String numberPhone, String address, String userName, String password, int rolId,
 			String email, int status) {
 		super();
@@ -74,10 +75,11 @@ public class User {
 		this.status = status;
 	}
 
+	// using for getUserbyRoldID
 	public User(int id, String fullName, String numberPhone, String address, String userName, String password,
 			int rolId, String email, int status) {
 		super();
-		this.id = id;
+		this.id = id; // have value id
 		this.fullName = fullName;
 		this.numberPhone = numberPhone;
 		this.address = address;
@@ -85,22 +87,6 @@ public class User {
 		this.password = password;
 		this.rolId = rolId;
 		this.email = email;
-		this.status = status;
-	}
-	
-	// User have value profile image 
-	public User(int id, String fullName, String numberPhone, String address, String userName, String password,
-			int rolId, String email, String profileImage, int status) {
-		super();
-		this.id = id;
-		this.fullName = fullName;
-		this.numberPhone = numberPhone;
-		this.address = address;
-		this.userName = userName;
-		this.password = password;
-		this.rolId = rolId;
-		this.email = email;
-		this.profileImage = profileImage;
 		this.status = status;
 	}
 
@@ -176,10 +162,19 @@ public class User {
 		this.id = id;
 	}
 
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
+
 	@Override
 	public String toString() {
-		return " fullName=" + fullName + ", numberPhone=" + numberPhone + ", address=" + address + ", userName="
-				+ userName + ", password=" + password + ", rolId=" + rolId + " ,status:" + status;
+		return "User [id=" + id + ", fullName=" + fullName + ", numberPhone=" + numberPhone + ", address=" + address
+				+ ", userName=" + userName + ", password=" + password + ", rolId=" + rolId + ", email=" + email
+				+ ", profileImage=" + profileImage + ", status=" + status + "]";
 	}
 
 }
