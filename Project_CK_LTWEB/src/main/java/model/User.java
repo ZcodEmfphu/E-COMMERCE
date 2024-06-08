@@ -12,28 +12,6 @@ public class User {
 	private String profileImage;
 	private int status;
 
-//	public User(String fullName, String numberPhone, String address, String userName, String password, int rolId) {
-//		super();
-//		this.fullName = fullName;
-//		this.numberPhone = numberPhone;
-//		this.address = address;
-//		this.userName = userName;
-//		this.password = password;
-//		this.rolId = rolId;
-//	}
-
-//	public User(String fullName, String numberPhone, String address, String userName, String password, int rolId,
-//			String email) {
-//		super();
-//		this.fullName = fullName;
-//		this.numberPhone = numberPhone;
-//		this.address = address;
-//		this.userName = userName;
-//		this.password = password;
-//		this.rolId = rolId;
-//		this.email = email;
-//	}
-
 	// using for change password
 	public User(int id, String fullName, String numberPhone, String address, String userName, String password,
 			int rolId, String email) {

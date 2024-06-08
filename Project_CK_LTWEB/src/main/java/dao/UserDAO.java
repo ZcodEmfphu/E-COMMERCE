@@ -104,7 +104,7 @@ public class UserDAO {
 		}
 		return null;
 	}
-	
+
 	// using on project
 	public User getUser(String userName, int status) {
 		DBContext db = DBContext.getInstance();

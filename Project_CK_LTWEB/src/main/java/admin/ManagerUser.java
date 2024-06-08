@@ -15,82 +15,62 @@ import model.User;
 
 @WebServlet("/manager_user")
 public class ManagerUser extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public ManagerUser() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public ManagerUser() {
+        super();
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-		response.setContentType("text/html;charset=UTF-8");
-		request.setCharacterEncoding("utf-8");
-	
-		UserDAO userDAO = new UserDAO();
-		String action = request.getParameter("action");
-		String update = request.getParameter("updateUser");
-		String access = request.getParameter("access");
-		
-		if(access !=null) {
-			request.setAttribute("access",access);
-		}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
 
-		if (action != null) {
-			if (action.equals("edit")) {
-				String eUserId = request.getParameter("eUserId");
+        UserDAO userDAO = new UserDAO();
+        String action = request.getParameter("action");
+        String update = request.getParameter("updateUser");
+        String access = request.getParameter("access");
 
-				User user = userDAO.getUser(Integer.parseInt(eUserId));
+        if (access != null) {
+            request.setAttribute("access", access);
+        }
 
-				request.setAttribute("eUser", user);
-				request.getRequestDispatcher("/admin/userEdit.jsp").forward(request, response);
-			}
+        if (action != null) {
+            if (action.equals("edit")) {
+                String eUserId = request.getParameter("eUserId");
+                User user = userDAO.getUser(Integer.parseInt(eUserId));
+                request.setAttribute("eUser", user);
+                request.getRequestDispatcher("/admin/userEdit.jsp").forward(request, response);
+            } else if (action.equals("detail")) {
+                String eUserId = request.getParameter("eUserId");
+                User user = userDAO.getUser(Integer.parseInt(eUserId));
+                request.setAttribute("eUser", user);
+                request.getRequestDispatcher("/admin/detailUser.jsp").forward(request, response);
+            }
+        } else if (update != null) {
+            String userId = request.getParameter("userId");
+            String userFullname = request.getParameter("userFullname");
+            String userPhone = request.getParameter("userPhone");
+            String userAddress = request.getParameter("userAddress");
+            String userName = request.getParameter("userName");
+            String userPassword = request.getParameter("userPassword");
+            String userRole = request.getParameter("userRole");
 
-			else if(action.equals("detail")) {
-				String eUserId = request.getParameter("eUserId");
-				User user = userDAO.getUser(Integer.parseInt(eUserId));
-				request.setAttribute("eUser", user);
-				request.getRequestDispatcher("/admin/detailUser.jsp").forward(request, response);
-			}
-		} else if (update != null) {
-			String userId = request.getParameter("userId");
-			String userFullname = request.getParameter("userFullname");
-			String userPhone = request.getParameter("userPhone");
-			String userAddress = request.getParameter("userAddress");
-			String userName = request.getParameter("userName");
-			String userPassword = request.getParameter("userPassword");
-			String userRole = request.getParameter("userRole");
-			
-			
-			System.out.println(userAddress);
+            User userUpdate = new User(Integer.parseInt(userId), userFullname, userPhone, userAddress, userName,
+                    userPassword, Integer.parseInt(userRole));
+            userDAO.updateUser(userUpdate);
 
-			User userUpdate = new User(Integer.parseInt(userId), userFullname, userPhone, userAddress, userName,
-					userPassword, Integer.parseInt(userRole));
-			userDAO.updateUser(userUpdate);
+            response.sendRedirect(request.getContextPath() + "/manager_user?access=yes");
+        } else {
+            List<User> listUser = userDAO.getUserByRolId(2, Status.ACTIVE);
+            request.setAttribute("listUser", listUser);
+            request.getSession().setAttribute("langeName", "vi_VN");
+            request.getRequestDispatcher("/admin/manager_user.jsp").forward(request, response);
+        }
+    }
 
-			response.sendRedirect(request.getContextPath()+"/manager_user?access=yes");
-		} else {
-			//Lay ra danh sach User co rol la User va con hoat dong status = 0
-			List<User> listUser = userDAO.getUserByRolId(2,Status.ACTIVE);
-			request.setAttribute("listUser", listUser);
-			request.getSession().setAttribute("langeName", "vi_VN");
-			request.getRequestDispatcher("/admin/manager_user.jsp").forward(request, response);
-		}
-
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
