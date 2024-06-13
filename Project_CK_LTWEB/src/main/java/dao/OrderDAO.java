@@ -14,7 +14,7 @@ import model.Product;
 import model.User;
 import support.DateTime;
 
-public class OrderDAO {
+public class OrderDAO  {
 	Connection connect = null;
 	PreparedStatement ps = null;
 	ResultSet result = null;
@@ -304,10 +304,39 @@ public class OrderDAO {
 		return list;
 	}
 
+public double getMoneyEveryYear(int year) {
+	DBContext db = DBContext.getInstance();
 
+	
+	try {
+		connect = db.getConnection();
+		String query = "SELECT COUNT(*) AS so_don_hang\r\n"
+				+ "FROM `order`\r\n"
+				+ "WHERE YEAR(`order`.orderDate) = ? "
+				;
+				
+		PreparedStatement ps = connect.prepareStatement(query);
+		ps.setInt(1, year);
+		ResultSet result = ps.executeQuery();
+		while (result.next()) {
+			return result.getDouble(1);
+			
+		}
+		ps.close();
+		connect.close();
+	} catch (ClassNotFoundException e) {
+		e.printStackTrace();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return 0;
+	
+}
 
 	public static void main(String[] args) {
 		OrderDAO orderDAO = new OrderDAO();
+		
+		
 //		List<Order> order = orderDAO.getOrderByUserID(3);
 //		List<OrderItem> list = orderDAO.getIDProductSellMost();
 //		for (OrderItem orderItem : list) {
