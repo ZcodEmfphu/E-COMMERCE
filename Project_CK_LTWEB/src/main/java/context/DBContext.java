@@ -9,7 +9,7 @@ public class DBContext {
 	private final String dbName = "web";
 	private final String portNumber = "3306";
 	private final String user = "root";
-	private final String password = "1234";
+	private final String password = "";
 	private static  DBContext instance;
 
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
@@ -17,7 +17,7 @@ public class DBContext {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		return DriverManager.getConnection(url, user, password);
 	}
-	private DBContext() {
+	public DBContext() {
 		
 	}
 	

@@ -16,6 +16,7 @@
 <title>Đăng Nhập</title>
 </head>
 <body>
+
 	<% String userName = request.getParameter("userName"); 
 		String password = request.getParameter("password");
 		
@@ -72,7 +73,7 @@
 										Bạn chưa có tài khoản? <a href="register.jsp" class="fw-bold text-body"><u>Đăng
 												ký tại đây</u></a>
 									</p>
-
+<a href="https://www.facebook.com/v19.0/dialog/oauth?client_id=1545474933045284&redirect_uri=http://localhost:8080/Project_CK_LTWEB/LoginFacebook">Login fb</a>
 								</form>
 
 							</div>
