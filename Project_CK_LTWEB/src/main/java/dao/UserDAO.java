@@ -161,7 +161,33 @@ public class UserDAO {
 		}
 		return null;
 	}
+	public User getUserByEmail(String email) {
+		DBContext db = DBContext.getInstance();
+		try {
+			connect = db.getConnection();
 
+			String query = "SELECT * FROM `user` WHERE user.email = ?";
+			ps = connect.prepareStatement(query);
+			ps.setString(1, email);
+			result = ps.executeQuery();
+			while (result.next()) {
+				return new User(result.getInt(1), result.getString(2), result.getString(3), result.getString(4),
+						result.getString(5), result.getString(6), result.getInt(7), result.getString(8),
+						result.getInt(9));
+			}
+			result.close();
+			ps.close();
+			connect.close();
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public int insertUser(User user) {
 		DBContext db = DBContext.getInstance();
 		int id = 0;

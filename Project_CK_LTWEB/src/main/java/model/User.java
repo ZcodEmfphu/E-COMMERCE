@@ -39,6 +39,19 @@ public class User {
 		this.rolId = rolId;
 	}
 
+	// using for update user
+		public User(String fullName, String userName, String password,
+				int rolId, String email, int status) {
+			super();
+			this.fullName = fullName;
+			this.userName = userName;
+			this.password = password;
+			this.rolId = rolId;
+			this.email = email;
+			this.status = status;
+		}
+
+		
 	// using for register
 	public User(String fullName, String numberPhone, String address, String userName, String password, int rolId,
 			String email, int status) {
