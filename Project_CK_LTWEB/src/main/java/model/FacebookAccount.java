@@ -1,13 +1,12 @@
 package model;
 
 public class FacebookAccount {
-	private String id, email, name, picture;
+	private String id, email, name;
 
 	public FacebookAccount(String id, String email, String name, String picture) {	
 		this.id = id;
 		this.email = email;
 		this.name = name;
-		this.picture = picture;
 	}
 	
 	
@@ -35,17 +34,10 @@ public class FacebookAccount {
 		this.name = name;
 	}
 
-	public String getPicture() {
-		return picture;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
-
+	
 	@Override
 	public String toString() {
-		return "FacebookAccount [id=" + id + ", email=" + email + ", name=" + name + ", picture=" + picture + "]";
+		return "FacebookAccount [id=" + id + ", email=" + email + ", name=" + name + "]";
 	}
 
 	

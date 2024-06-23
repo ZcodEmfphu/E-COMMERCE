@@ -63,7 +63,6 @@ public class RegisterController extends HttpServlet {
 		if (user != null) {
 			message.put("userError", "Tài khoản đã tồn tại!");
 			request.getRequestDispatcher("/register.jsp").forward(request, response);
-			;
 		} else {
 			String rePassword = request.getParameter("rePassword");
 			if (password.length() < 10) {

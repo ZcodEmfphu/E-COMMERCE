@@ -6,10 +6,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.http.client.ClientProtocolException;
 
+import dao.UserDAO;
 import model.FacebookAccount;
+import model.User;
 
 /**
  * Servlet implementation class LoginFacebook
@@ -29,17 +32,35 @@ public class LoginFacebook extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String code = request.getParameter("code");
-        System.out.println(code);
-        FacebookLogin FB = new FacebookLogin();
-        String accessToken = FB.getToken(code);
-        System.out.println(accessToken);
-        FacebookAccount acc = FB.getUserInfo(accessToken);
-        System.out.println(acc);
-	}
-		
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            String code = request.getParameter("code");
+            String error = request.getParameter("error");
+            if (error != null) {
+                request.setAttribute("error", "login by facebook failure");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            } else {
+                UserDAO userDAO = new UserDAO();
+                FacebookLogin FB = new FacebookLogin();
+                String accessToken = FB.getToken(code);
+                System.out.println(accessToken);
+                FacebookAccount acc = FB.getUserInfo(accessToken);
+                String passwordRandom = "123456";
+               
+                User user = userDAO.getUserByEmail(acc.getEmail());
+                HttpSession session = request.getSession(true);
+                if (user == null) {
+                    System.out.print("---------------------->");
+                    user  = new User(acc.getName(), acc.getName(), passwordRandom, 1, acc.getEmail(), 0);
+                    int id = userDAO.insertUser(user);
+                    user.setId(id);
+                    
+                }
+                session.setAttribute("user", user);
+                response.sendRedirect(request.getContextPath()+"/HomeController");
+            }
+        
+    }
+
 	
 
 	/**
@@ -49,10 +70,14 @@ public class LoginFacebook extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-public static void main(String[] args) throws ClientProtocolException, IOException {
-	 FacebookLogin FB = new FacebookLogin();
-     String accessToken = FB.getToken("AQCyVAgUUOepvGdmpwNwk19CWdmUkDCnanq0uIOO1NxfxQ-Bg-IGi3bnv_sQuVpzoRVxsUPuXFDdgHs5TvdBW57nWBnpZxfMVIcN1Xo1PM6KTWpeo2QaGNUxnjSXuQsocYQmOai9-_Qu5S_X9bMMxwLlSYFEqL0-Ux6dmpV3wH6M1xFntbjgHTErDpp24yUWJSz1579vnISlXVVVwxr2sOki9J_CVbDzB3X2eRlQu3-0G0mjLj_H35PA0VCbyoORni2K6JmYcW41bk60HUEY1mnAmVQTw-CnmOfEwUIwngxBN-8CV-wHyuUGgINcXZ_pOZYqLVGYwQxkjAI0RiZU37wIOEMkecSix1FWI1pLiKg8TJ4gaMCK5eeHFlJ2iYDA6gny2J9Y3X3wAhkOvvT8mtFc8NoOHTxX-zsJ2jVSdNINKg\r\n"
-     		+ "");
-     System.out.println(accessToken);
-}
+	public static void main(String[] args) {
+		UserDAO userDAO = new UserDAO();
+		 User newUser = new User("abcerr", "abcerr", "12345", 1,"cu20663@gmail.com", 0);
+    	 int id = userDAO.insertUser(newUser);
+    	 newUser.setId(id);
+    	 System.out.print("-======>");
+    	 System.out.print(newUser);
+    	 
+	}
+
 }
